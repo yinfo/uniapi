@@ -1,0 +1,26 @@
+{
+  "name": "uniapi",
+  "version": "0.0.1",
+  "description": "uniapi - one logic for Http and Socket protocols",
+  "main": "index.js",
+  "scripts": {
+    "server-debug": "nodemon --quiet --inspect=9235 index",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "Igor Yarovenko",
+  "license": "",
+  "dependencies": {
+    "axios": "0.18.0",
+    "express": "^4.16.3",
+    "json-server": "^0.15.0",
+    "pg": "7.11.0",
+    "ws": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "nodemon": "^1.17.3"
+  }
+}
