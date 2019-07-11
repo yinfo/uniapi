@@ -4,7 +4,7 @@
   "description": "uniapi - one logic for Http and Socket protocols",
   "main": "index.js",
   "scripts": {
-    "server-debug": "nodemon --quiet --inspect=9235 index",
+    "server-debug": "nodemon --quiet --inspect=9236 index",
     "start": "node index.js"
   },
   "keywords": [
