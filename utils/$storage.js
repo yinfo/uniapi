@@ -78,7 +78,7 @@ module.exports.runDynamicModule = async (scr, method, params) => {
 
 module.exports.getSystemInfo = async () => {
 
-    return Object.assign({}, $systemSettings.dynamicModulesPaths)
+    return Object.assign({}, $systemSettings)
     // return {
     //     sessionsCount: Object.keys($systemSettings.sessions).length,
     //     pingPongCount: $systemSettings.pingPongCount
