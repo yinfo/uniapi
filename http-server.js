@@ -36,7 +36,7 @@ app.get('*', function(req, res) {
 
     res.status(200).json({
         type: 'valid-response',
-        message: JSON.stringify($storage.getSystemInfo()),
+        message: $storage.getSystemSettingsByName('dynamicModulesPaths'),
     })
 })
 
