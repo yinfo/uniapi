@@ -1,19 +1,9 @@
-const errors = require('./models/Errors')
+const errors = require('../models/Errors')
 //-------------------------------------------------------------------------------
 //---------------------------Отправка сообщений-----------------------------------------
 //--------------------------------------------------------------------------------
 module.exports.sendSuccessWS = function (ws, message) {
     try {
-        // switch (typeof message) {
-        //     case 'string':
-        //         ws.send(message)
-        //         break
-        //     case 'object':
-        //         ws.send(JSON.stringify(message))
-        //         break
-        //     default:
-        //         return false
-        // }
         if (typeof message === 'string') {
             ws.send(message)
         } else if (typeof message === 'object') {

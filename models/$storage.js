@@ -1,10 +1,13 @@
 const path = require('path')
 const fs = require('fs')
+const {db} = require('../db_pgp');
+const Users = require('../db_pgp/db_users');
+const db_users = new Users(db)
+// const db_users = new require('../db_pgp/db_users')(db)
 
 // const moment = require('moment-timezone')
 // const pgDB = require('../models/pgDB')
 // const SocketSession = require('../models/SocketSession')
-const keys = require('../config/keys')
 
 const $systemSettings = {
     testMode: null,
@@ -14,13 +17,28 @@ const $systemSettings = {
     dynamicModulesPaths: {},
 }
 module.exports.onStart = async () => {
-    this.updateModules()
-    if(this.testMode()){
-        const json_test = require('../dynamic_modules/json_test')
+    // this.updateModules()
+    if (this.testMode()) {
+
+
+
+        console.log(await  db_users.all())
+
+        // db.any('SELECT * FROM users', null)
+        //     .then(function(data) {
+        //         console.log('data',data)
+        //     })
+        //     .catch(function(error) {
+        //         // error;
+        //     });
+        // const session = require('../db_pg/session')
+        // console.log(await session.getAll().rows)
+
+        // const json_test = require('../db/json_test')
         // const res = await json_test.createTable()
         // const res = await json_test.initialFill()
-        const {rows} = await json_test.getAll()
-        console.log(JSON.stringify(rows))
+        // const {rows} = await json_test.getAll()
+        // console.log(JSON.stringify(rows))
     }
     // console.log(await this.runDynamicModule('Test1', 'test2'))
 
@@ -31,7 +49,7 @@ module.exports.onStart = async () => {
 //--------------------------------------------------------------------------------
 module.exports.updateModules = () => {
     const errors = []
-    const modelsPath = path.resolve(__dirname, '../dynamic_modules')
+    const modelsPath = path.resolve(__dirname, '../db')
     fs.readdirSync(modelsPath).forEach(file => {
         try {
 
@@ -44,7 +62,7 @@ module.exports.updateModules = () => {
 
             // console.log('fileName', fileName)
         } catch (e) {
-            errors.push('e.message=',e.message)
+            errors.push('e.message=', e.message)
             console.error(e.message)
         }
     })
@@ -85,16 +103,20 @@ module.exports.getSystemInfo = async () => {
     // }
 }
 module.exports.getConnectionStringPostgres = function () {
-    return keys.connectionStringPostgres
+    if (this.testMode()) {
+        return require('../local_keys').postgresString
+    } else {
+        return process.env.postgresString
+    }
 }
 module.exports.testMode = function () {
-    if($systemSettings.testMode === false){
+    if ($systemSettings.testMode === false) {
         return false
-    } else if ($systemSettings.testMode === true){
+    } else if ($systemSettings.testMode === true) {
         return true
     } else {
         $systemSettings.testMode = process.env.HOME.indexOf('C:\\Users') > -1
-        return  $systemSettings.testMode
+        return $systemSettings.testMode
     }
 }
 module.exports.getSystemSettingsByName = (settingsName) => {

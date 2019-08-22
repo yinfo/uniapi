@@ -1,3 +1,4 @@
+const postgresString = 'nothing show'
 module.exports = {
     apps : [{
         name: 'uniApi',
@@ -11,10 +12,11 @@ module.exports = {
         max_memory_restart: '1G',
         env: {
             NODE_ENV: 'development',
-            connectionStringPostgres:'postgres://yqidbxly:fufOn7hGH_sFZqcXz-johT8zIDzUgCdr@rogue.db.elephantsql.com:5432/yqidbxly'
+            postgresString
         },
         env_production: {
-            NODE_ENV: 'production'
+            NODE_ENV: 'production',
+            postgresString
         }
     }],
 

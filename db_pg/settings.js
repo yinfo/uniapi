@@ -1,6 +1,6 @@
 const {Pool} = require('pg')
-const dbErrors = require('../models/db_errors')
-const {connectionStringPostgres:connectionString} = require('../config/keys')
+const {dbError} = require('./db_errors')
+const connectionString = $storage.getConnectionStringPostgres()
 const pool = new Pool({connectionString})
 // const uniqid = require('uniqid')
 
@@ -46,24 +46,21 @@ module.exports = {
                 return null
             }
         }catch (e) {
-            throw overrideError(e)
+            throw dbError(e)
+        }
+    },
+    getAll: async function () {
+        try {
+            return await pool.query(`SELECT * FROM settings;`, null)
+        } catch (e) {
+            console.error(e.message)
+            throw dbError(e)
         }
     },
 
-
 }
 
 
-const overrideError = (e) => {
-    const code = e.code
-    const errorId = dbErrors[code] ? dbErrors[code] : 'unknown_db_error'
-    return {
-        code,
-        errorId,
-        message: e.message,
-        stack: e.stack,
-    }
-}
 
 
 

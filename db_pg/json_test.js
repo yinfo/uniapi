@@ -1,7 +1,6 @@
-const table = 'json_test'
 const {Pool} = require('pg')
-const dbErrors = require('../models/db_errors')
-const {connectionStringPostgres:connectionString} = require('../config/keys')
+const {dbError} = require('./db_errors')
+const connectionString = $storage.getConnectionStringPostgres()
 const pool = new Pool({connectionString})
 // const uniqid = require('uniqid')
 
@@ -11,7 +10,7 @@ module.exports = {
 //--------------------------------------------------------------------------------
     createTable: async function () {
         const createTableText = `            
-            CREATE  TABLE IF NOT EXISTS ${table} (
+            CREATE  TABLE IF NOT EXISTS json_test (
               id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
               name  VARCHAR (50) UNIQUE,
               data JSONB
@@ -21,7 +20,7 @@ module.exports = {
             return await pool.query(createTableText)
         } catch (e) {
             console.error(e.message)
-            throw overrideError(e)
+            throw dbError(e)
         }
         // const newUser = {email: '1cuslugi.ru@gmail.com'}
         // create a settings
@@ -37,7 +36,7 @@ module.exports = {
     },
     initialFill: async function () {
         const initialFillText = `
-        INSERT INTO ${table} (data) VALUES 
+        INSERT INTO json_test (data) VALUES 
           ('{}'),
           ('{"a": 1}'),
           ('{"a": 2, "b": ["c", "d"]}'),
@@ -48,7 +47,7 @@ module.exports = {
             return await pool.query(initialFillText)
         } catch (e) {
             console.error(e.message)
-            throw overrideError(e)
+            throw dbError(e)
         }
     },
     deleteAll: async function()  {
@@ -60,7 +59,7 @@ module.exports = {
             // return await pool.query(`SELECT * FROM ${table}`, null)
         } catch (e) {
             console.error(e.message)
-            throw overrideError(e)
+            throw dbError(e)
         }
     },
 
@@ -70,13 +69,4 @@ module.exports = {
 
 
 }
-const overrideError = (e) => {
-    const code = e.code
-    const errorId = dbErrors[code] ? dbErrors[code] : 'unknown_db_error'
-    return {
-        code,
-        errorId,
-        message: e.message,
-        stack: e.stack,
-    }
-}
+

@@ -1,0 +1,4 @@
+
+
+00:36:55 error: connect ECONNREFUSED 127.0.0.1:5432
+         connection: {"host":"localhost","port":5432,"database":"pg-promise-demo","user":"postgres"}
