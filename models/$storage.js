@@ -103,11 +103,12 @@ module.exports.getSystemInfo = async () => {
     // }
 }
 module.exports.getConnectionStringPostgres = function () {
-    if (this.testMode()) {
-        return require('../local_keys').postgresString
-    } else {
-        return process.env.postgresString
-    }
+    return  process.env.NODE_ENV === 'production'? process.env.postgresString: require('../local_keys').postgresString
+    // if (this.testMode()) {
+    //     return require('../local_keys').postgresString
+    // } else {
+    //     return process.env.postgresString
+    // }
 }
 module.exports.testMode = function () {
     if ($systemSettings.testMode === false) {
