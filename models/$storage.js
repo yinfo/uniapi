@@ -21,8 +21,12 @@ module.exports.onStart = async () => {
     if (this.testMode()) {
 
 
+        try {
+            console.log(await db_users.all())
+        }catch (e) {
+            console.error(e)
+        }
 
-        console.log(await db_users.all())
 
         // db.any('SELECT * FROM users', null)
         //     .then(function(data) {
