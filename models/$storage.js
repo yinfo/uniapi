@@ -20,15 +20,17 @@ module.exports.onStart = async () => {
      this.updateModules()
     // console.log('LOG WTF???')
     // console.error('ERR WTF???')
-    console.log(await db_users.all())
+
+    try {
+        console.log(await db_users.all())
+    }catch (e) {
+        console.error(e.message)
+    }
+
     if (this.testMode()) {
 
 
-        // try {
-        //
-        // }catch (e) {
-        //     console.error(e.message)
-        // }
+
 
 
 
