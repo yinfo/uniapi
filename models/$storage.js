@@ -24,7 +24,7 @@ module.exports.onStart = async () => {
         try {
             console.log(await db_users.all())
         }catch (e) {
-            console.error(e)
+            console.error(e.message)
         }
 
 
