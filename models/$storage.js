@@ -119,6 +119,7 @@ module.exports.getConnectionStringPostgres = function () {
     // }
 }
 module.exports.testMode = function () {
+
     if ($systemSettings.testMode === false) {
         return false
     } else if ($systemSettings.testMode === true) {
