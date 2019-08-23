@@ -1,6 +1,9 @@
 const promise = require('bluebird'); // best promise library today
 const pgPromise = require('pg-promise'); // pg-promise core library
-const dbConfig = require('../local_keys').postgresString; // db connection details
+
+const dbConfig = process.env.NODE_ENV === 'production'? process.env.postgresString: require('../local_keys').postgresString
+
+// const dbConfig = require('../local_keys').postgresString; // db connection details
 const {Diagnostics} = require('./diagnostics'); // optional diagnostics
 const {Users, Products} = require('./repos');
 
