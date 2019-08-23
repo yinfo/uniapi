@@ -16,7 +16,7 @@ module.exports = class Users  {
     // Creates the table;
 
     async all() {
-        return this.db.any('SELECT * FROM users2');
+        return this.db.any('SELECT * FROM users');
     }
 
     async create() {
