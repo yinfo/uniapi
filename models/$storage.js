@@ -103,7 +103,15 @@ module.exports.getSystemInfo = async () => {
     // }
 }
 module.exports.getConnectionStringPostgres = function () {
-    return  process.env.NODE_ENV === 'production'? process.env.postgresString: require('../local_keys').postgresString
+    let dbConfig = process.env.postgresString
+    if(process.env.NODE_ENV === 'production'){
+        dbConfig =process.env.postgresString
+    } else {
+        dbConfig = require('../local_keys').postgresString
+    }
+    return dbConfig
+    // return  process.env.NODE_ENV === 'production'? process.env.postgresString: require('../local_keys').postgresString
+
     // if (this.testMode()) {
     //     return require('../local_keys').postgresString
     // } else {
