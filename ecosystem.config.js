@@ -1,4 +1,3 @@
-const postgresString = 'nothing show'
 module.exports = {
     apps : [{
         name: 'uniApi',
@@ -12,11 +11,10 @@ module.exports = {
         max_memory_restart: '1G',
         env: {
             NODE_ENV: 'development',
-            postgresString
         },
         env_production: {
             NODE_ENV: 'production',
-            postgresString
+            postgresString:'nothing show'
         }
     }],
 

@@ -17,12 +17,12 @@ const $systemSettings = {
     dynamicModulesPaths: {},
 }
 module.exports.onStart = async () => {
-    // this.updateModules()
+     this.updateModules()
     if (this.testMode()) {
 
 
 
-        console.log(await  db_users.all())
+        console.log(await db_users.all())
 
         // db.any('SELECT * FROM users', null)
         //     .then(function(data) {
@@ -49,18 +49,18 @@ module.exports.onStart = async () => {
 //--------------------------------------------------------------------------------
 module.exports.updateModules = () => {
     const errors = []
-    const modelsPath = path.resolve(__dirname, '../db')
+    const modelsPath = path.resolve(__dirname, '../db_pgp')
+    const unloadableFiles = ['', 'diagnostics', 'errors', 'index']
     fs.readdirSync(modelsPath).forEach(file => {
         try {
-
             const fileName = removeExtensionFromFile(file)
-            const fullPath = modelsPath + '/' + file
-
-            delete require.cache[require.resolve(fullPath)]
-            let temp = require(fullPath)
-            $systemSettings.dynamicModulesPaths[fileName] = fullPath
-
-            // console.log('fileName', fileName)
+            if(!unloadableFiles.includes(fileName) ){
+                console.log('fileName', fileName)
+                const fullPath = modelsPath + '/' + file
+                delete require.cache[require.resolve(fullPath)]
+                let temp = require(fullPath)
+                $systemSettings.dynamicModulesPaths[fileName] = fullPath
+            }
         } catch (e) {
             errors.push('e.message=', e.message)
             console.error(e.message)
