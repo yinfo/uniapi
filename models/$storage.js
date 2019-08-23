@@ -18,9 +18,11 @@ const $systemSettings = {
 }
 module.exports.onStart = async () => {
      this.updateModules()
+    console.log('LOG WTF???')
+    console.error('ERR WTF???')
     if (this.testMode()) {
 
-        console.log('WTF???')
+
         // try {
         //     console.log(await db_users.all())
         // }catch (e) {
