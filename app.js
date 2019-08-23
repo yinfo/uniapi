@@ -23,14 +23,19 @@ app.get('/login', function (req, res) {
     //
     // "Log in" user and set userId to session.
     //
-    console.log('app.get(\'/login\'')
-    const id = uuid.v4();
-    const user = {name: 'Garry'}
+    try {
+        console.log('app.get(\'/login\'')
+        const id = uuid.v4();
+        const user = {name: 'Garry'}
 
-    console.log(`Updating session for user ${id}`);
-    req.session.userId = id;
-    req.session.user = user;
-    res.send({result: 'OK', message: 'Session updated'});
+        console.log(`Updating session for user ${id}`);
+        req.session.userId = id;
+        req.session.user = user;
+        res.send({result: 'OK', message: 'Session updated'});
+    }catch (e) {
+        res.send(e);
+    }
+
 });
 const uniapi = require('./controllers/uniapi')
 const mainRoute = require('./routes/api')
