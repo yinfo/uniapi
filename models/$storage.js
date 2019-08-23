@@ -20,12 +20,12 @@ module.exports.onStart = async () => {
      this.updateModules()
     if (this.testMode()) {
 
-
-        try {
-            console.log(await db_users.all())
-        }catch (e) {
-            console.error(e.message)
-        }
+        console.error('WTF???')
+        // try {
+        //     console.log(await db_users.all())
+        // }catch (e) {
+        //     console.error(e.message)
+        // }
 
 
         // db.any('SELECT * FROM users', null)
