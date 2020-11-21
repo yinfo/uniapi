@@ -2,7 +2,7 @@ const port = process.env.PORT || 8080
 const uuid = require('uuid')
 const express = require('express')
 const app = express()
-const session = require('express-session')
+/*const session = require('express-session')
 const PostgresSqlStore = require('connect-pg-simple')(session);
 const sessionParser =session({
     secret: '$eCuRiTy',
@@ -13,86 +13,20 @@ const sessionParser =session({
         conString: $storage.getConnectionStringPostgres()
     }),
 })
-app.use(sessionParser);
+app.use(sessionParser);*/
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-
-app.get('/login', function (req, res) {
-    //
-    // "Log in" user and set userId to session.
-    //
-    try {
-        console.log('app.get(\'/login\'')
-        const id = uuid.v4();
-        const user = {name: 'Garry'}
-
-        console.log(`Updating session for user ${id}`);
-        req.session.userId = id;
-        req.session.user = user;
-        res.send({result: 'OK', message: 'Session updated'});
-    }catch (e) {
-        res.send(e);
-    }
-
-});
 const uniapi = require('./controllers/uniapi')
 const mainRoute = require('./routes/api')
 app.use('/uniapi', uniapi.onApiMessageHttp)
 app.use('/api', mainRoute)
-
-
-
 app.all('*', mainRoute) //ловим 404
-
-// app.delete('/logout', function(request, response) {
-//     console.log('Destroying session');
-//     request.session.destroy(function() {
-//         response.send({ result: 'OK', message: 'Session destroyed' });
-//     });
-// });
-// app.get("/", function (req, res) {
-//     if (!req.session.views) {
-//         req.session.views = 1;
-//     } else {
-//         req.session.views += 1;
-//     }
-//
-//     res.json({
-//         "status": "ok",
-//         "frequency": req.session.views
-//     });
-// });
-//
-// app.get('*', function (req, res) {
-//     res.status(200).json({
-//         type: 'valid-response',
-//         message: 'uniapi server work!',
-//     })
-// })
-// app.get('/api', function (req, res) {
-//     try {
-//         const errors = $storage.updateModules()
-//         if (!errors) {
-//             uniapi.sendSuccessHttp(res,)
-//             res.status(200).json({
-//                 type: 'valid-response',
-//                 message: "updateModules success!",
-//             })
-//         } else {
-//             uniapi.sendErrorHttp(res, 'error_updateModules', e.message)
-//         }
-//     } catch (e) {
-//         uniapi.sendErrorHttp(res, 'error_updateModules', e.message)
-//     }
-// })
-//
-//
 
 const WSServer = require('ws').Server
 const server = require('http').createServer(app)
-server.on('upgrade', function (request, socket, head) {
+/*server.on('upgrade', function (request, socket, head) {
     console.log('Parsing session from request...');
 
     sessionParser(request, {}, () => {
@@ -114,7 +48,7 @@ server.on('upgrade', function (request, socket, head) {
 
         });
     });
-});
+});*/
 // Create web socket server on top of a regular http server
 const wss = new WSServer({
     // server,
@@ -122,7 +56,7 @@ const wss = new WSServer({
 })
 wss.on('connection', function connection(ws, req) {
     console.log('connection!!!')
-    uniapi.sendSuccessWS(ws, `Hy, ${req.session.user.name}!` )
+    uniapi.sendSuccessWS(ws, `Hy from server!` )
     ws.on('message', function (message) {
         uniapi.onApiMessageWS(ws, message)
     });
