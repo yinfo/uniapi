@@ -1,6 +1,6 @@
 {
   "name": "uniapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "uniapi - one logic for Http and Socket protocols. ",
   "main": "index.js",
   "scripts": {
