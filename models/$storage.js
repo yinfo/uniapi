@@ -1,15 +1,13 @@
 const path = require('path')
 const fs = require('fs')
-//const tulind = require('tulind')
 
 const $systemSettings = {
   testMode: null,
   sessions: {},
   pingPongCount: 0,
-
   dynamicModulesPaths: {},
 }
-module.exports.onStart = async () => {
+module.exports.init = async () => {
   this.updateModules('../test', ['', 'diagnostics', 'index'])
 
   if (this.testMode()) {
@@ -80,7 +78,6 @@ module.exports.getSystemInfo = async () => {
 }
 
 module.exports.testMode = function () {
-
   if ($systemSettings.testMode === false) {
     return false
   } else if ($systemSettings.testMode === true) {
@@ -90,58 +87,10 @@ module.exports.testMode = function () {
     return $systemSettings.testMode
   }
 }
+
 module.exports.getSystemSettingsByName = (settingsName) => {
   return $systemSettings[settingsName]
 }
-module.exports.now = function () {
 
-  // if (this.testMode()) {
-  //     return moment().add(3, 'hours').startOf('second')
-  // } else {
-  //     return moment().startOf('second')
-  // }
-}
-
-//-------------------------------------------------------------------------------
-//---------------------------Сессии------------------------------------------
-//-------------------------------------------------------------------------------
-module.exports.addSession = (ws, sessionId) => {
-  // try {
-  //     $systemSettings.sessions[sessionId] = new SocketSession(ws, sessionId)
-  //     return true
-  // } catch (e) {
-  //     console.error('addSession', e.message)
-  //     return false
-  // }
-}
-
-module.exports.removeSession = (sessionId) => {
-  delete $systemSettings.sessions[sessionId]
-}
-
-module.exports.getSession = (sessionId) => {
-  return $systemSettings.sessions[sessionId]
-
-
-}
-//-------------------------------------------------------------------------------
-//---------------------------Работа с БД------------------------------------------
-//-------------------------------------------------------------------------------
-module.exports.checkDatabaseSessionId = async (sessionId) => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             if (!sessionId) reject(false)
-//             const result = await pgDB.userCheckSessionId(sessionId)
-//             if (result) {
-//                 resolve(true)
-//             } else {
-//                 reject(false)
-//             }
-//         } catch (e) {
-//             console.error(e.message)
-//             reject(false)
-//         }
-//     })
-}
 
 

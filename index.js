@@ -1,6 +1,6 @@
 
 global.$storage = require('./models/$storage')
-$storage.onStart()
+$storage.init()
 require('./app')
 
 

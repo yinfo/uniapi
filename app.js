@@ -51,12 +51,12 @@ const server = require('http').createServer(app)
 });*/
 // Create web socket server on top of a regular http server
 const wss = new WSServer({
-    // server,
+     server,
     noServer: true,
 })
 wss.on('connection', function connection(ws, req) {
     console.log('connection!!!')
-    uniapi.sendSuccessWS(ws, `Hy from server!` )
+    //uniapi.sendSuccessWS(ws, `Hy from server!` )
     ws.on('message', function (message) {
         uniapi.onApiMessageWS(ws, message)
     });

@@ -114,7 +114,7 @@ module.exports.runMethod = async function (scr, method, params) {
 
 module.exports.onApiMessageWS = async function (ws, message) {
     try {
-        const command = JSON.stringify(message)
+        const command = JSON.parse(message)
         const {scr, method, data, uid} = command
         const result = {uid, scr, method}
 
