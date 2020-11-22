@@ -8,7 +8,7 @@ const $systemSettings = {
   dynamicModulesPaths: {},
 }
 module.exports.init = async () => {
-  this.updateModules('../test', ['', 'diagnostics', 'index'])
+  this.updateModules('./dynamic_modules', ['', 'diagnostics', 'index'])
 
   if (this.testMode()) {
 

@@ -18,11 +18,17 @@ app.use(sessionParser);*/
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-const uniapi = require('./controllers/uniapi')
-const mainRoute = require('./routes/api')
-app.use('/uniapi', uniapi.onApiMessageHttp)
-app.use('/api', mainRoute)
-app.all('*', mainRoute) //ловим 404
+const uniapi = require('./uniapi')
+//const mainRoute = require('./routes/api')
+app.use('/api', uniapi.onApiMessageHttp)
+//app.use('/api', mainRoute)
+//app.all('*', mainRoute) //ловим 404
+app.all('*', (req, res) =>{
+    res.status(404).json({
+        success: false,
+        data: '404'
+    })
+})
 
 const WSServer = require('ws').Server
 const server = require('http').createServer(app)

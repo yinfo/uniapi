@@ -1,6 +1,5 @@
-const errors = require('../models/Errors')
 //-------------------------------------------------------------------------------
-//---------------------------Отправка сообщений-----------------------------------------
+//-------------------------- sending success or error ---------------------------
 //--------------------------------------------------------------------------------
 module.exports.sendSuccessWS = function (ws, message) {
     try {
@@ -85,7 +84,7 @@ module.exports.sendErrorHttp = function (res, error, message) {
 }
 
 //-------------------------------------------------------------------------------
-//---------------------------Анализ входящих сообщений-----------------------------------------
+//--------------------------- incoming messages -----------------------------------------
 //--------------------------------------------------------------------------------
 module.exports.runMethod = async function (scr, method, params) {
     const returnResult = {error:null, newData:null}
@@ -95,7 +94,7 @@ module.exports.runMethod = async function (scr, method, params) {
                 if (typeof $storage[method] === "function") {
                     returnResult.newData = params ? await $storage[method](params) : await $storage[method]()
                 } else {
-                    returnResult.error = errors.WRONG_METHOD
+                    returnResult.error = "WRONG_METHOD"
                 }
                 break
             default:
@@ -119,11 +118,11 @@ module.exports.onApiMessageWS = async function (ws, message) {
         const result = {uid, scr, method}
 
         if (!scr) {
-            result.error = errors.MISSING_SCR
+            result.error = "MISSING_SCR"
             return this.sendErrorWS(ws, result)
         }
         if (!method) {
-            result.error = errors.MISSING_METHOD
+            result.error = "MISSING_METHOD"
             return this.sendErrorWS(ws, result)
         }
 
@@ -145,11 +144,11 @@ module.exports.onApiMessageHttp = async (req, res) => {
         const result = {uid, scr, method}
 
         if (!scr) {
-            result.error = errors.MISSING_SCR
+            result.error = "MISSING_SCR"
             return this.sendErrorHttp(res, result)
         }
         if (!method) {
-            result.error = errors.MISSING_METHOD
+            result.error = "MISSING_METHOD"
             return this.sendErrorHttp(res, result)
         }
 
