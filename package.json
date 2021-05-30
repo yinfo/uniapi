@@ -21,7 +21,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "ws": "^7.1.2",
+    "ws": "^7.4.6",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
